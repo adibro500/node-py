@@ -46,7 +46,7 @@ MongoClient.connect('mongodb://root:root@ds133378.mlab.com:33378/kleveron', (err
  
 })
 
-app.post('/api/login/', function(req, res) {
+app.post('/api/login/', function(req, res, err) {
   db.collection('logins').findOne({ username: req.body.username}, function(err, user) {
     console.log('User found ',req.body);
     // In case the user not found  
@@ -54,7 +54,7 @@ app.post('/api/login/', function(req, res) {
       console.log('THIS IS ERROR RESPONSE');
       res.json(err);
     } 
-    if (user.password === req.body.password){
+    if (user!=null && (user.password === req.body.password)){
       console.log('User and password is correct');
       res.json(user);
     } else {
