@@ -10,7 +10,7 @@ var cors = require('cors');
 var multer = require("multer");
 var hindi = require("./langs/hindi.json");
 var english = require("./langs/en.json");
-var gujurati = require("./langs/guj.json");
+var gujarati = require("./langs/guj.json");
 
 
 var app = express();
