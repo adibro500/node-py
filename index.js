@@ -8,6 +8,9 @@ var dbCons = require("./constants/db-constants");
 var apiCons = require("./constants/api-constants");
 var cors = require('cors');
 var multer = require("multer");
+var hindi = require("./langs/hindi.json");
+var english = require("./langs/en.json");
+var gujurati = require("./langs/guj.json");
 
 
 var app = express();
@@ -270,6 +273,20 @@ app.get("/get/admin2",function(req,res){
 //    res.end('File is uploaded');
 //  });
 // });
+
+app.get('/lang/en.json', function (req, res,err) {
+ 
+  res.json(english);
+})
+app.get('/lang/hindi.json',function(req,res,err){
+  
+  res.json(hindi);
+  });
+
+  app.get('/lang/guj.json',function(req,res,err){
+  
+    res.json(gujarati);
+    });
 
 
 
