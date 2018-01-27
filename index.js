@@ -10,6 +10,8 @@ var cors = require('cors');
 var hindi = require("./langs/hindi.json");
 var english = require("./langs/en.json");
 var gujarati = require("./langs/guj.json");
+var exec = require('child_process').execFile;
+var PythonShell = require('python-shell');
 
 
 var app = express();
@@ -192,3 +194,87 @@ app.get('/get/customer/:addr',function(req,res){
   
   
   });
+
+  app.get("/send/mail",function(){
+    const nodemailer = require('nodemailer');
+
+    // Generate test SMTP service account from ethereal.email
+    // Only needed if you don't have a real mail account for testing
+    nodemailer.createTestAccount((err, account) => {
+    
+        // create reusable transporter object using the default SMTP transport
+        let transporter = nodemailer.createTransport({
+            host: 'smtp.sendgrid.net',
+            port: 587,
+            secure: false, // true for 465, false for other ports
+            auth: {
+                user: "apikey", // generated ethereal user
+                pass: "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"  // generated ethereal password
+            }
+        });
+    
+        // setup email data with unicode symbols
+        let mailOptions = {
+            from: '<foo@blurdybloop.com>', // sender address
+            to: 'ammanabrolu.aditya@gmail.com', // list of receivers
+            subject: 'Hello ✔', // Subject line
+            text: 'Hello world?', // plain text body
+            html: '<b>Hello world?</b>' // html body
+        };
+    
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                return console.log(error);
+            }
+            console.log('Message sent: %s', info.messageId);
+            // Preview only available when sending through an Ethereal account
+            console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+    
+            // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@blurdybloop.com>
+            // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+        });
+    });
+
+  })
+
+
+  app.get("/trial",function(req,res,err){  
+   
+      console.log("fun() start");
+      exec('ConsoleApplication2.exe', function(err, data) {  
+        if(err){
+           console.log(err)
+        }else{
+           res.send("<em><h1>"+data.toString()+"</h1></em>");    
+        }                   
+       });  
+  });
+
+  app.get("/trial2",function(req,res,err){
+    var options = {
+      mode: 'text',
+      pythonPath: 'python',
+      pythonOptions: ['-u'],
+     };
+    PythonShell.run('./my_script.py', options, function (err,data) {
+      if (err) throw err;
+      console.log('finished');
+      res.send(data.toString());
+    });
+    //C:\\Users\\SRKAYCG\\AppData\\Local\\Programs\\Python\\Python36-32\\python.exe
+//     var spawn = require('child_process').spawn,
+//     py    = spawn('C:\\Users\\SRKAYCG\\AppData\\Local\\Programs\\Python\\Python36-32\\python.exe',['./my_script.py']),
+//     data = [1,2,3,4,5,6,7,8,9],
+//     dataString = '';
+
+// py.stdout.on('data', function(data){
+//   dataString += data.toString();
+//   res.send(dataString);
+// });
+// py.stdout.on('end', function(){
+//   console.log('Sum of numbers=',dataString);
+// });
+// py.stdin.write(JSON.stringify(data));
+// py.stdin.end();
+  })
