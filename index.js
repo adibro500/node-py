@@ -254,7 +254,7 @@ app.get('/get/customer/:addr',function(req,res){
   app.get("/trial2",function(req,res,err){
     var options = {
       mode: 'text',
-      pythonPath: '/usr/bin/python3.5/python.exe',
+      pythonPath: '/usr/bin/python3.5/',
       pythonOptions: ['-u'],
      };
     PythonShell.run('./my_script.py', options, function (err,data) {
