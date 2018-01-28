@@ -254,7 +254,7 @@ app.get('/get/customer/:addr',function(req,res){
   app.get("/trial2",function(req,res,err){
     var options = {
       mode: 'text',
-      pythonPath: process.env.PYTHONPATH,
+      pythonPath: 'C:\\Users\\SRKAYCG\\AppData\\Local\\Programs\\Python\\Python36-32\\',
       pythonOptions: ['-u'],
      };
     PythonShell.run('./my_script.py', options, function (err,data) {
@@ -262,7 +262,7 @@ app.get('/get/customer/:addr',function(req,res){
       console.log('finished');
       res.send(data.toString());
     });
-
+//process.env.PYTHONPATH
 //C:\\Users\\SRKAYCG\\AppData\\Local\\Programs\\Python\\Python36-32\\python.exe
 //     var spawn = require('child_process').spawn,
 //     py    = spawn('C:\\Users\\SRKAYCG\\AppData\\Local\\Programs\\Python\\Python36-32\\python.exe',['./my_script.py']),
