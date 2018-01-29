@@ -1,1 +1,1 @@
-web: pip install numpy & node index.js
+web: pip install -r requirements.txt & node index.js
