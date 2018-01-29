@@ -1,1 +1,1 @@
-web: node index.js
+web: pip install numpy & node index.js
